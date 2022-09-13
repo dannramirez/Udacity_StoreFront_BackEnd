@@ -6,6 +6,14 @@
     "helpers": [
         "helpers/**/*.js"
     ],
-    "stopSpecOnExpectationFailure": false,
-    "random": false
+    "reporters": [
+        {
+          "name": "jasmine-spec-reporter#SpecReporter",
+          "options": {
+            "displayStacktrace": "all"
+          }
+        }
+      ],
+      "stopSpecOnExpectationFailure": false,
+      "random": true
 }
