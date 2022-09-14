@@ -19,7 +19,7 @@ const mainFunction = async (request: Request, response: Response): Promise<Respo
     return response.json({
       response: 'bad',
       status: 500,
-      error: 'Verificar credenciales de acceso a la base de datos',
+      error: 'Error en la conexion a la base de datos',
     });
   }
 
