@@ -1,4 +1,5 @@
 import express from 'express';
+import {Request, Response} from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
@@ -29,6 +30,12 @@ app.use('/api', routes);
 
 //Files
 //app.use(express.static('uploads'));
+
+app.use((_req: Request, res: Response) => {
+  res.status(404).json({
+    message: 'This route not exists!! Please read API Documentation. 🦖',
+  });
+});
 
 //Server
 const server = app.listen(port, () => {
