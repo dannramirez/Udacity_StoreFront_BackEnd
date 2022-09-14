@@ -9,6 +9,8 @@
     "fbuild": "npm run prettier-f && npm run lint && npx tsc",
     "jasmine": "jasmine",
     "lint": "eslint . --ext .ts",
+    "migrate:dev": "db-migrate up --config database.json -e dev",
+    "migrate:prod": "db-migrate up --config database.json -e prod",
     "prettier-f": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "prettier-w": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
     "test": "yarn build && yarn jasmine",
