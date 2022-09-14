@@ -1,4 +1,7 @@
 import express from 'express';
+import helmet from 'helmet';
+import morgan from 'morgan';
+
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -13,8 +16,12 @@ const port = process.env.PORT || 3000;
 
 //Body parser
 app.use(express.urlencoded({extended: true}));
+//parse incoming request
 app.use(express.json());
-
+//request logger middleware
+app.use(morgan('common'));
+//request security middleware
+app.use(helmet());
 //Routes
 app.use('/api', routes);
 //app.use('/', express.static('public/'));
