@@ -7,11 +7,15 @@ const debug = Debug('API:DB:mainFunction');
 
 const mainFunction = async (request: Request, response: Response): Promise<Response> => {
   try {
-    const {rows} = await dbConection.query('SELECT NOW()');
+    const conectionDB = await dbConection.connect();
+    const sql = 'SELECT NOW()';
+    const result = await conectionDB.query(sql);
+    conectionDB.release(true);
+
     debug(
       chalk.magenta(
         '🚀 ~ file: main.ts ~ line 10 ~ mainFunction ~ rows',
-        JSON.stringify(rows[0].now)
+        JSON.stringify(result.rows[0].now)
       )
     );
   } catch (error) {
