@@ -11,6 +11,7 @@ import Debug from 'debug';
 const debug = Debug('API:Express');
 
 import routes from './routes';
+import users_routes from './routes/users';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,7 +25,9 @@ app.use(morgan('common'));
 //request security middleware
 app.use(helmet());
 //Routes
-app.use('/api', routes);
+app.use('/api/', routes);
+app.use('/api/users', users_routes);
+
 //app.use('/', express.static('public/'));
 //app.use('/upload', express.static('public/upload.html'));
 
