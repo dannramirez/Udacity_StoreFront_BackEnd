@@ -52,6 +52,7 @@ const show_user = async (request: Request, response: Response): Promise<Response
 const create_user = async (request: Request, response: Response): Promise<Response> => {
   const user: User = {
     id: request.params.id,
+    username: request.body.username,
     firstName: request.body.firstName,
     lastName: request.body.lastName,
     password: request.body.password,
@@ -79,6 +80,7 @@ const create_user = async (request: Request, response: Response): Promise<Respon
 const update_user = async (request: Request, response: Response): Promise<Response> => {
   const user: User = {
     id: request.params.id,
+    username: request.body.username,
     firstName: request.body.firstName,
     lastName: request.body.lastName,
     password: request.body.password,

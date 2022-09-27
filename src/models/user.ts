@@ -7,6 +7,7 @@ const debug = Debug('API:Models:User');
 
 export type User = {
   id: string;
+  username: string;
   firstName: string;
   lastName: string;
   password: string;
@@ -48,9 +49,14 @@ export class UsersCRUD {
   async create(u: User): Promise<User> {
     try {
       const sql =
-        'INSERT INTO "public"."Users" ("firstName", "lastName", "password") VALUES ($1, $2, $3) RETURNING *';
+        'INSERT INTO "public"."Users" ("username","firstName", "lastName", "password") VALUES ($1, $2, $3, $4) RETURNING *';
       const conectionDB = await dbConection.connect();
-      const result = await conectionDB.query(sql, [u.firstName, u.lastName, u.password]);
+      const result = await conectionDB.query(sql, [
+        u.username,
+        u.firstName,
+        u.lastName,
+        u.password,
+      ]);
       const user = result.rows[0];
 
       conectionDB.release(true);
@@ -66,9 +72,15 @@ export class UsersCRUD {
   async update(u: User): Promise<User> {
     try {
       const sql =
-        'UPDATE "public"."Users" set "firstName"= $1, "lastName"= $2, "password"= $3 WHERE id = $4 RETURNING *';
+        'UPDATE "public"."Users" set "username"=$1 "firstName"= $2, "lastName"= $3, "password"= $4 WHERE id = $5 RETURNING *';
       const conectionDB = await dbConection.connect();
-      const result = await conectionDB.query(sql, [u.firstName, u.lastName, u.password, u.id]);
+      const result = await conectionDB.query(sql, [
+        u.username,
+        u.firstName,
+        u.lastName,
+        u.password,
+        u.id,
+      ]);
       const user = result.rows[0];
 
       conectionDB.release(true);
