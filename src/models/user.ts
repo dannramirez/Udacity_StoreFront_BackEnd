@@ -3,6 +3,8 @@
 import dbConection from '../utilities/dbConection';
 import chalk from 'chalk';
 import Debug from 'debug';
+import {hashPassword, validatePassword} from '../utilities/hash_validate_password';
+
 const debug = Debug('API:Models:User');
 
 export type User = {
@@ -55,7 +57,7 @@ export class UsersCRUD {
         u.username,
         u.firstName,
         u.lastName,
-        u.password,
+        hashPassword(u.password),
       ]);
       const user = result.rows[0];
 
@@ -67,6 +69,25 @@ export class UsersCRUD {
       debug(chalk.red('🚀 ~ file: user.ts ~ Users ~ index ~ Create Users'));
       throw new Error(`Could not add new user ${u.firstName}. Error: ${err}`);
     }
+  }
+
+  async authenticate(username: string, password: string): Promise<User | null> {
+    const sql = 'SELECT * FROM "public"."Users" WHERE username=($1)';
+    const conectionDB = await dbConection.connect();
+    const result = await conectionDB.query(sql, [username]);
+
+    conectionDB.release(true);
+
+    if (result.rows.length) {
+      const user = result.rows[0];
+      console.log(user);
+      console.log(validatePassword(password, user.password));
+      if (validatePassword(password, user.password)) {
+        return user;
+      }
+    }
+
+    return null;
   }
 
   async update(u: User): Promise<User> {

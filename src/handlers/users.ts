@@ -60,12 +60,35 @@ const create_user = async (request: Request, response: Response): Promise<Respon
 
   try {
     const users = await crud.create(user);
-    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 57 ~ constcreate_user= ~ user', users));
+    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 57 ~ create_user= ~ user', users));
 
     return response.json({
       response: 'ok',
       status: 200,
       users,
+    });
+  } catch (error) {
+    debug(chalk.red(error));
+    return response.status(500).json({
+      response: 'bad',
+      status: 500,
+      error: 'Internal Server Error',
+    });
+  }
+};
+
+const authenticate_user = async (request: Request, response: Response): Promise<Response> => {
+  const username: string = request.body.username;
+  const password: string = request.body.password;
+
+  try {
+    const user = await crud.authenticate(username, password);
+    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 57 ~ authenticate_user= ~ user', user));
+
+    return response.json({
+      response: 'ok',
+      status: 200,
+      user,
     });
   } catch (error) {
     debug(chalk.red(error));
@@ -127,4 +150,4 @@ const delete_user = async (request: Request, response: Response): Promise<Respon
   }
 };
 
-export {index_user, show_user, create_user, update_user, delete_user};
+export {index_user, show_user, create_user, authenticate_user, update_user, delete_user};
