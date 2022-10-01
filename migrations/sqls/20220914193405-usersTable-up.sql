@@ -5,5 +5,7 @@ CREATE TABLE IF NOT EXISTS "Users" (
     "lastName" VARCHAR(25) NOT NULL,
     "password" TEXT NOT NULL,
     
-    PRIMARY KEY ("id")
+    PRIMARY KEY ("id"),
+
+    CONSTRAINT unique_username UNIQUE (username)
 );
