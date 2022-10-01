@@ -3,6 +3,7 @@ import {Request, Response} from 'express';
 import {User, UsersCRUD} from '../models/user';
 import chalk from 'chalk';
 import Debug from 'debug';
+import {generarJWT} from '../utilities/token';
 const debug = Debug('API:Handler:User');
 
 const crud = new UsersCRUD();
@@ -60,12 +61,14 @@ const create_user = async (request: Request, response: Response): Promise<Respon
 
   try {
     const users = await crud.create(user);
+    const token = generarJWT(users.id);
     debug(chalk.magenta('🚀 ~ file: users.ts ~ line 57 ~ create_user= ~ user', users));
 
     return response.json({
       response: 'ok',
       status: 200,
       users,
+      token,
     });
   } catch (error) {
     debug(chalk.red(error));
@@ -84,11 +87,21 @@ const authenticate_user = async (request: Request, response: Response): Promise<
   try {
     const user = await crud.authenticate(username, password);
     debug(chalk.magenta('🚀 ~ file: users.ts ~ line 57 ~ authenticate_user= ~ user', user));
+    if (user) {
+      const token: string = generarJWT(user.id);
 
-    return response.json({
-      response: 'ok',
-      status: 200,
-      user,
+      return response.json({
+        response: 'ok',
+        status: 200,
+        user,
+        token,
+      });
+    }
+
+    return response.status(404).json({
+      response: 'bad',
+      status: 404,
+      error: 'Please contact with service',
     });
   } catch (error) {
     debug(chalk.red(error));
