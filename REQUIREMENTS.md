@@ -6,6 +6,17 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 
+#### Main Endpoints Implemented
+
+
+- Index
+- 
+
+
+| Endpoint | Route | Method | Header | Body | Description     |
+| -------- | ----- | ------ | ------ | ---- | --------------- |
+| Index    | /     | GET    |        | --   | Welcome message |
+
 #### Products Endpoints Requirements
 
 - Index
@@ -40,10 +51,12 @@ access-token is token provided when you logged in.
 | -------------- | --------------- | ------ | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
 | Index          | /users/         | GET    | access-token | --                                                                                                                                                             | Show all users                                        |
 | Show           | /users/:user_ID | GET    | access-token | --                                                                                                                                                             | Show one user                                         |
-| Create         | /users/         | POST   | access-token | {<br /> &nbsp;"username": "username", <br /> &nbsp;"firstName": "firstName", <br /> &nbsp;"lastName": "lastName", <br /> &nbsp;"password": "password" <br /> } | Create new user                                       |
+| Create         | /users/         | POST   |              | {<br /> &nbsp;"username": "username", <br /> &nbsp;"firstName": "firstName", <br /> &nbsp;"lastName": "lastName", <br /> &nbsp;"password": "password" <br /> } | Create new user                                       |
 | Update         | /users/:user_ID | PUT    | access-token | {<br /> &nbsp;"username": "username", <br /> &nbsp;"firstName": "firstName", <br /> &nbsp;"lastName": "lastName", <br /> &nbsp;"password": "password" <br /> } | Update user                                           |
 | Delete         | /users/:user_ID | DELETE | access-token | --                                                                                                                                                             | Delete user                                           |
 | Authentication | /users/auth     | POST   |              | {<br /> &nbsp;"username": "username", <br /> &nbsp;"password": "password" <br /> }                                                                             | Auth user with username and password to get the token |
+
+access-token is token provided when you logged in.
 
 #### Orders Endpoints Requirements
 
@@ -52,20 +65,19 @@ access-token is token provided when you logged in.
 
 #### Orders Endpoints Implemented
 
-| Endpoint                              | Route                      | Method | Header       | Body                                                                                   | Description                               |
-| ------------------------------------- | -------------------------- | ------ | ------------ | -------------------------------------------------------------------------------------- | ----------------------------------------- |
-| Index                                 | /orders/                   | GET    | access-token | --                                                                                     | Show all products                         |
-| Show                                  | /orders/:product_ID        | GET    | access-token | --                                                                                     | Show all products                         |
-| Create                                | /orders/                   | POST   | access-token | {<br /> &nbsp;"user_id": "user_id", <br /> &nbsp;"orderStatus": "orderStatus" <br /> } | Create new product                        |
-| Update                                | /orders/:product_ID        | PUT    | access-token | {<br /> &nbsp;"user_id": "user_id", <br /> &nbsp;"orderStatus": "orderStatus" <br /> } | Update product                            |
-| Delete                                | /orders/:product_ID        | DELETE | access-token | --                                                                                     | Delete product                            |
-| Add product from current order        | /orders/add/:order_ID      | POST   | access-token | {<br /> &nbsp;"product_id": "product_id", <br /> &nbsp;"qty": "qty" <br /> }           | Show top 5 most popular products          |
-| Update qty product from current order | /orders/remove/:order_ID   | POST   | access-token | {<br /> &nbsp;"product_id": "product_id", <br /> &nbsp;"qty": "qty" <br /> }         | Show top 5 most popular products          |
-| Remove product from current order     | /orders/remove/:order_ID   | POST   | access-token | {<br /> &nbsp;"product_id": "product_id", <br />}                                     | Show top 5 most popular products          |
-| Complete Order                        | /orders/:order_ID          | PATCH  | access-token | {<br /> &nbsp;"orderStatus": "Completed", <br />}                                    | Show top 5 most popular products          |
-| Current order by user                 | /orders/current/:user_ID   | POST   | access-token | --                                                                                     | Show products that belong to the category |
-| Completed orders by user              | /orders/completed/:user_ID | GET    | access-token | --                                                                                     | Show products that belong to the category |
-| Order                                 | /orders/:category          | GET    | access-token | --                                                                                     | Show products that belong to the category |
+| Endpoint                          | Route                      | Method | Header       | Body                                                                                   | Description                                    |
+| --------------------------------- | -------------------------- | ------ | ------------ | -------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| Index                             | /orders/                   | GET    | access-token | --                                                                                     | Show all Orders                                |
+| Show                              | /orders/:product_ID        | GET    | access-token | --                                                                                     | Show one order                                 |
+| Create                            | /orders/                   | POST   | access-token | {<br /> &nbsp;"user_id": "user_id", <br /> &nbsp;"orderStatus": "orderStatus" <br /> } | Create new Order                               |
+| Update                            | /orders/:product_ID        | PUT    | access-token | {<br /> &nbsp;"user_id": "user_id", <br /> &nbsp;"orderStatus": "orderStatus" <br /> } | Update order                                   |
+| Delete                            | /orders/:product_ID        | DELETE | access-token | --                                                                                     | Delete product                                 |
+| Add product                       | /orders/add/:order_ID      | POST   | access-token | {<br /> &nbsp;"product_id": "product_id", <br /> &nbsp;"qty": "qty" <br /> }           | Add product from current order                 |
+| Update qty                        | /orders/remove/:order_ID   | POST   | access-token | {<br /> &nbsp;"product_id": "product_id", <br /> &nbsp;"qty": "qty" <br /> }         | Update qty product from current order          |
+| Remove product from current order | /orders/remove/:order_ID   | POST   | access-token | {<br /> &nbsp;"product_id": "product_id", <br />}                                     | Remove product from current order              |
+| Complete Order                    | /orders/:order_ID          | PATCH  | access-token | {<br /> &nbsp;"orderStatus": "Completed", <br />}                                    | Finish order and change status                 |
+| Current order by user             | /orders/current/:user_ID   | POST   | access-token | --                                                                                     | Show current order that belongs to user        |
+| Completed orders by user          | /orders/completed/:user_ID | GET    | access-token | --                                                                                     | Show all completed orders that belongs to user |
 
 access-token is token provided when you logged in.
 
@@ -94,7 +106,6 @@ Next data shapes its about how data will going to be stored in Data Base so next
 - quantity of each product in the order
 - user_id
 - status of order (active or complete)
-
 
 EER Diagram:
 
