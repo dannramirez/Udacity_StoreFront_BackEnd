@@ -8,10 +8,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Main Endpoints Implemented
 
-
 - Index
-- 
-
 
 | Endpoint | Route | Method | Header | Body | Description     |
 | -------- | ----- | ------ | ------ | ---- | --------------- |
