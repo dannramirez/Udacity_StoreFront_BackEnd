@@ -12,6 +12,8 @@ const debug = Debug('API:Express');
 
 import routes from './routes';
 import users_routes from './routes/users';
+import orders_routes from './routes/orders';
+import products_routes from './routes/products';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,9 +27,10 @@ app.use(morgan('common'));
 //request security middleware
 app.use(helmet());
 //Routes
-app.use('/api/', routes);
-app.use('/api/users', users_routes);
-
+app.use('/', routes);
+app.use('/users', users_routes);
+app.use('/products', products_routes);
+app.use('/orders', orders_routes);
 //app.use('/', express.static('public/'));
 //app.use('/upload', express.static('public/upload.html'));
 
