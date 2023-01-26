@@ -18,6 +18,8 @@ const dbConection = new Pool({
   database: POSTGRES_DB,
   host: POSTGRES_HOST,
   port: Number(POSTGRES_PORT),
+  max: 20,
+  allowExitOnIdle: true,
 });
 
 export default dbConection;

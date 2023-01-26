@@ -99,10 +99,15 @@ Next data shapes its about how data will going to be stored in Data Base so next
 #### Orders
 
 - id
-- id of each product in the order
-- quantity of each product in the order
 - user_id
 - status of order (active or complete)
+
+#### ProductsOnOrders
+
+- id
+- id of each product in the order
+- quantity of each product in the order
+
 
 EER Diagram:
 

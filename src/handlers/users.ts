@@ -1,6 +1,6 @@
 /*main Controller Express*/
 import {Request, Response} from 'express';
-import {User, UsersCRUD} from '../models/user';
+import {User, UsersCRUD} from '../models/users';
 import chalk from 'chalk';
 import Debug from 'debug';
 import {generarJWT} from '../utilities/token';

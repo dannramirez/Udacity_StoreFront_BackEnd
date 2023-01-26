@@ -57,6 +57,8 @@ const showOne = async (request: Request, response: Response): Promise<Response> 
 };
 
 const createOne = async (request: Request, response: Response): Promise<Response> => {
+  debug(chalk.magenta('🚀 ~ file: products.ts IN'));
+
   const product: Product = {
     id: request.params.id,
     name: request.body.name,
@@ -66,9 +68,7 @@ const createOne = async (request: Request, response: Response): Promise<Response
 
   try {
     const productOne = await crud.create(product);
-
-    debug(chalk.magenta('🚀 ~ file: products.ts ~ createOne', productOne));
-
+    debug(chalk.magenta('🚀 ~ file: products.ts ~ createOne', JSON.stringify(productOne)));
     return response.json({
       response: 'ok',
       status: 200,
@@ -140,4 +140,60 @@ const deleteOne = async (request: Request, response: Response): Promise<Response
   }
 };
 
-export {index, showOne, createOne, updateOne, deleteOne};
+const topProducts = async (request: Request, response: Response): Promise<Response> => {
+  try {
+    const topProductList = await crud.topList();
+    debug(chalk.magenta('🚀 ~ file: products.ts ~ topProducts', topProductList));
+
+    if (topProductList === null) {
+      return response.status(404).json({
+        response: 'bad',
+        status: 404,
+      });
+    }
+
+    return response.json({
+      response: 'ok',
+      status: 200,
+      topProducts: topProductList,
+    });
+  } catch (error) {
+    debug(chalk.red(error));
+    return response.status(500).json({
+      response: 'bad',
+      status: 500,
+      error: 'Internal Server Error',
+    });
+  }
+};
+
+const byCategory = async (request: Request, response: Response): Promise<Response> => {
+  const {category} = request.params;
+
+  try {
+    const productsList = await crud.byCategory(category);
+    debug(chalk.magenta('🚀 ~ file: products.ts ~ byCategory', productsList));
+
+    if (productsList === null) {
+      return response.status(404).json({
+        response: 'bad',
+        status: 404,
+      });
+    }
+
+    return response.json({
+      response: 'ok',
+      status: 200,
+      Products: productsList,
+    });
+  } catch (error) {
+    debug(chalk.red(error));
+    return response.status(500).json({
+      response: 'bad',
+      status: 500,
+      error: 'Internal Server Error',
+    });
+  }
+};
+
+export {index, showOne, createOne, updateOne, deleteOne, topProducts, byCategory};

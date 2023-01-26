@@ -7,7 +7,6 @@ const logger = (req: express.Request, res: express.Response, next: express.NextF
   const url = req.url;
   const ip = req.ip;
   debug(chalk.green('ip: ') + chalk.blue(ip) + chalk.green('url: ') + chalk.blue(url));
-  console.log(ip);
   next();
 };
 

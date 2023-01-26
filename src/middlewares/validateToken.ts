@@ -21,6 +21,11 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
 
     const decoded = validateJWT(token);
 
+    if (!token) {
+      debug(chalk.red('Not Authorizated'));
+      throw new Error();
+    }
+
     (req as CustomRequest).token = decoded;
     debug(chalk.green('Token validated'));
     next();

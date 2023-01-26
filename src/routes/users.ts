@@ -12,11 +12,11 @@ import validateToken from '../middlewares/validateToken';
 
 const routes: Router = express.Router();
 
-routes.post('/', logger, create_user);
-routes.post('/auth', logger, authenticate_user);
 routes.get('/', logger, validateToken, index_user);
 routes.get('/:id', logger, validateToken, show_user);
+routes.post('/', logger, create_user);
 routes.put('/:id', logger, validateToken, update_user);
 routes.delete('/:id', logger, validateToken, delete_user);
+routes.post('/auth', logger, authenticate_user);
 
 export default routes;
