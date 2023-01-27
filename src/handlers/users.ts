@@ -11,7 +11,7 @@ const crud = new UsersCRUD();
 const index_user = async (_request: Request, response: Response): Promise<Response> => {
   try {
     const users = await crud.index();
-    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 13 ~ index ~ users', users));
+    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 13 ~ index ~ users'));
 
     return response.json({
       response: 'ok',
@@ -33,7 +33,7 @@ const show_user = async (request: Request, response: Response): Promise<Response
 
   try {
     const users = await crud.show(id);
-    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 35 ~ constshow_user= ~ show', users));
+    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 35 ~ constshow_user= ~ show'));
 
     return response.json({
       response: 'ok',
@@ -51,18 +51,20 @@ const show_user = async (request: Request, response: Response): Promise<Response
 };
 
 const create_user = async (request: Request, response: Response): Promise<Response> => {
+  const {username, firstName, lastName, password} = request.body as User;
+
   const user: User = {
     id: request.params.id,
-    username: request.body.username,
-    firstName: request.body.firstName,
-    lastName: request.body.lastName,
-    password: request.body.password,
+    username: username,
+    firstName: firstName,
+    lastName: lastName,
+    password: password,
   };
 
   try {
     const users = await crud.create(user);
     const token = generarJWT(users.id);
-    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 57 ~ create_user= ~ user', users));
+    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 57 ~ create_user= ~ user'));
 
     return response.json({
       response: 'ok',
@@ -81,12 +83,11 @@ const create_user = async (request: Request, response: Response): Promise<Respon
 };
 
 const authenticate_user = async (request: Request, response: Response): Promise<Response> => {
-  const username: string = request.body.username;
-  const password: string = request.body.password;
+  const {username, password} = request.body as User;
 
   try {
     const user = await crud.authenticate(username, password);
-    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 57 ~ authenticate_user= ~ user', user));
+    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 57 ~ authenticate_user= ~ user'));
     if (user) {
       const token: string = generarJWT(user.id);
 
@@ -114,17 +115,19 @@ const authenticate_user = async (request: Request, response: Response): Promise<
 };
 
 const update_user = async (request: Request, response: Response): Promise<Response> => {
+  const {username, firstName, lastName, password} = request.body as User;
+
   const user: User = {
     id: request.params.id,
-    username: request.body.username,
-    firstName: request.body.firstName,
-    lastName: request.body.lastName,
-    password: request.body.password,
+    username: username,
+    firstName: firstName,
+    lastName: lastName,
+    password: password,
   };
 
   try {
     const users = await crud.update(user);
-    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 79 ~ constupdate_user= ~ user', users));
+    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 79 ~ constupdate_user= ~ user'));
 
     return response.json({
       response: 'ok',
@@ -146,7 +149,7 @@ const delete_user = async (request: Request, response: Response): Promise<Respon
 
   try {
     const users = await crud.delete(id);
-    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 13 ~ index ~ users', users));
+    debug(chalk.magenta('🚀 ~ file: users.ts ~ line 13 ~ index ~ users'));
 
     return response.json({
       response: 'ok',

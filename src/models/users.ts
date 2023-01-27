@@ -25,10 +25,10 @@ export class UsersCRUD {
 
       debug(chalk.green('🚀 ~ file: 24 user.ts ~ Users ~ Index Users'));
 
-      return result.rows;
+      return result.rows as User[];
     } catch (err) {
       debug(chalk.red('🚀 ~ file: user.ts ~ Users ~ Index Users'));
-      throw new Error(`Could not get users. Error: ${err}`);
+      throw new Error(`Could not get users. Error: ${err as string}`);
     } finally {
       if (conectionDB !== null) {
         conectionDB.release(true);
@@ -47,12 +47,12 @@ export class UsersCRUD {
 
       debug(chalk.green('🚀 ~ file: user.ts ~ Users ~ Show Users'));
       if (result.rows.length) {
-        return result.rows[0];
+        return result.rows[0] as User;
       }
       return null;
     } catch (err) {
       debug(chalk.red('🚀 ~ file: user.ts ~ Users ~ Show Users'));
-      throw new Error(`Could not find user ${id}. Error: ${err}`);
+      throw new Error(`Could not find user ${id}. Error: ${err as string}`);
     } finally {
       if (conectionDB !== null) {
         conectionDB.release(true);
@@ -74,14 +74,14 @@ export class UsersCRUD {
         u.lastName,
         hashPassword(u.password),
       ]);
-      const user = result.rows[0];
+      const user = result.rows[0] as User;
 
       debug(chalk.green('🚀 ~ file: user.ts ~ Users ~ Create Users'));
 
       return user;
     } catch (err) {
       debug(chalk.red('🚀 ~ file: user.ts ~ Users ~ Create Users'));
-      throw new Error(`Could not add new user ${u.firstName}. Error: ${err}`);
+      throw new Error(`Could not add new user ${u.firstName}. Error: ${err as string}`);
     } finally {
       if (conectionDB !== null) {
         conectionDB.release(true);
@@ -97,13 +97,13 @@ export class UsersCRUD {
       const sql = 'SELECT password FROM "public"."Users" WHERE username=($1)';
       conectionDB = await dbConection.connect();
       const result = await conectionDB.query(sql, [username]);
-      const encrypted_password = result.rows[0].password;
+      const {password: encrypted_password} = result.rows[0] as User;
 
       if (result.rows.length) {
         if (validatePassword(password, encrypted_password)) {
           const sql = 'SELECT * FROM "public"."Users" WHERE username=($1)';
           const result = await conectionDB.query(sql, [username]);
-          const user = result.rows[0];
+          const user = result.rows[0] as User;
 
           debug(chalk.green('🚀 ~ file: user.ts ~ Users ~ authenticate Users'));
 
@@ -114,7 +114,7 @@ export class UsersCRUD {
       return null;
     } catch (err) {
       debug(chalk.red('🚀 ~ file: user.ts ~ Users ~ authenticate Users'));
-      throw new Error(`Could not authenticate user ${username}. Error: ${err}`);
+      throw new Error(`Could not authenticate user ${username}. Error: ${err as string}`);
     } finally {
       if (conectionDB !== null) {
         conectionDB.release(true);
@@ -137,14 +137,14 @@ export class UsersCRUD {
         hashPassword(u.password),
         u.id,
       ]);
-      const user = result.rows[0];
+      const user = result.rows[0] as User;
 
       debug(chalk.green('🚀 ~ file: user.ts ~ Users ~ update Users'));
 
       return user;
     } catch (err) {
       debug(chalk.red('🚀 ~ file: user.ts ~ Users ~ update Users'));
-      throw new Error(`Could not update user ${u.firstName}. Error: ${err}`);
+      throw new Error(`Could not update user ${u.firstName}. Error: ${err as string}`);
     } finally {
       if (conectionDB !== null) {
         conectionDB.release(true);
@@ -163,12 +163,12 @@ export class UsersCRUD {
 
       if (result.rows.length) {
         debug(chalk.green('🚀 ~ file: user.ts ~ Users ~ Delete Users'));
-        return result.rows[0];
+        return result.rows[0] as User;
       }
       return null;
     } catch (err) {
       debug(chalk.red('🚀 ~ file: user.ts ~ Users ~ Delete Users'));
-      throw new Error(`Could not delete user ${id}. Error: ${err}`);
+      throw new Error(`Could not delete user ${id}. Error: ${err as string}`);
     } finally {
       if (conectionDB !== null) {
         conectionDB.release(true);

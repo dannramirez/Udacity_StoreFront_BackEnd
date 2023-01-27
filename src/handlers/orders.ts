@@ -10,7 +10,7 @@ const crud = new OrdersCRUD();
 const index = async (_request: Request, response: Response): Promise<Response> => {
   try {
     const orders = await crud.index();
-    debug(chalk.magenta('🚀 ~ file: orders.ts ~ index', orders));
+    debug(chalk.magenta('🚀 ~ file: orders.ts ~ index'));
 
     return response.json({
       response: 'ok',
@@ -32,7 +32,7 @@ const showOne = async (request: Request, response: Response): Promise<Response> 
 
   try {
     const orders = await crud.show(id);
-    debug(chalk.magenta('🚀 ~ file: orders.ts ~ showOne', orders));
+    debug(chalk.magenta('🚀 ~ file: orders.ts ~ showOne'));
 
     if (orders === null) {
       return response.status(404).json({
@@ -57,16 +57,18 @@ const showOne = async (request: Request, response: Response): Promise<Response> 
 };
 
 const createOne = async (request: Request, response: Response): Promise<Response> => {
+  const {user_id, orderStatus} = request.body as Order;
+
   const order: Order = {
     id: request.params.id,
-    user_id: request.body.user_id,
-    orderStatus: request.body.orderStatus,
+    user_id: user_id,
+    orderStatus: orderStatus,
   };
 
   try {
     const orders = await crud.create(order);
 
-    debug(chalk.magenta('🚀 ~ file: orders.ts ~ createOne', orders));
+    debug(chalk.magenta('🚀 ~ file: orders.ts ~ createOne'));
 
     return response.json({
       response: 'ok',
@@ -84,15 +86,16 @@ const createOne = async (request: Request, response: Response): Promise<Response
 };
 
 const updateOne = async (request: Request, response: Response): Promise<Response> => {
+  const {user_id, orderStatus} = request.body as Order;
   const order: Order = {
     id: request.params.id,
-    user_id: request.body.user_id,
-    orderStatus: request.body.orderStatus,
+    user_id: user_id,
+    orderStatus: orderStatus,
   };
 
   try {
     const orderOne = await crud.update(order);
-    debug(chalk.magenta('🚀 ~ file: orders.ts ~ UpdateOne', orderOne));
+    debug(chalk.magenta('🚀 ~ file: orders.ts ~ UpdateOne'));
 
     return response.json({
       response: 'ok',
@@ -122,7 +125,7 @@ const deleteOne = async (request: Request, response: Response): Promise<Response
       });
     }
 
-    debug(chalk.magenta('🚀 ~ file: orders.ts ~ delete', orderOne));
+    debug(chalk.magenta('🚀 ~ file: orders.ts ~ delete'));
     return response.json({
       response: 'ok',
       status: 200,
@@ -139,10 +142,12 @@ const deleteOne = async (request: Request, response: Response): Promise<Response
 };
 
 const addProductFromOrder = async (request: Request, response: Response): Promise<Response> => {
+  const {product_id, quantity} = request.body as OrderProduct;
+
   const order: OrderProduct = {
     order_id: request.params.order_id,
-    product_id: request.body.product_id,
-    quantity: request.body.quantity,
+    product_id: product_id,
+    quantity: quantity,
   };
 
   console.log(order);
@@ -157,7 +162,7 @@ const addProductFromOrder = async (request: Request, response: Response): Promis
       });
     }
 
-    debug(chalk.magenta('🚀 ~ file: orders.ts ~ delete', orderOne));
+    debug(chalk.magenta('🚀 ~ file: orders.ts ~ delete'));
     return response.json({
       response: 'ok',
       status: 200,
@@ -174,10 +179,12 @@ const addProductFromOrder = async (request: Request, response: Response): Promis
 };
 
 const updateQtyFromOrder = async (request: Request, response: Response): Promise<Response> => {
+  const {product_id, quantity} = request.body as OrderProduct;
+
   const order: OrderProduct = {
     order_id: request.params.order_id,
-    product_id: request.body.product_id,
-    quantity: request.body.quantity,
+    product_id: product_id,
+    quantity: quantity,
   };
 
   try {
@@ -190,7 +197,7 @@ const updateQtyFromOrder = async (request: Request, response: Response): Promise
       });
     }
 
-    debug(chalk.magenta('🚀 ~ file: orders.ts ~ delete', orderOne));
+    debug(chalk.magenta('🚀 ~ file: orders.ts ~ delete'));
     return response.json({
       response: 'ok',
       status: 200,
@@ -207,9 +214,11 @@ const updateQtyFromOrder = async (request: Request, response: Response): Promise
 };
 
 const removeProductFromOrder = async (request: Request, response: Response): Promise<Response> => {
+  const {product_id} = request.body as OrderProduct;
+
   const order: OrderProduct = {
     order_id: request.params.order_id,
-    product_id: request.body.product_id,
+    product_id: product_id,
     quantity: 0,
   };
 
@@ -223,7 +232,7 @@ const removeProductFromOrder = async (request: Request, response: Response): Pro
       });
     }
 
-    debug(chalk.magenta('🚀 ~ file: orders.ts ~ delete', orderOne));
+    debug(chalk.magenta('🚀 ~ file: orders.ts ~ delete'));
     return response.json({
       response: 'ok',
       status: 200,
@@ -240,10 +249,12 @@ const removeProductFromOrder = async (request: Request, response: Response): Pro
 };
 
 const updateOrderStatus = async (request: Request, response: Response): Promise<Response> => {
+  const {user_id, orderStatus} = request.body as Order;
+
   const order: Order = {
     id: request.params.id,
-    user_id: request.body.user_id,
-    orderStatus: request.body.orderStatus,
+    user_id: user_id,
+    orderStatus: orderStatus,
   };
 
   try {
@@ -256,7 +267,7 @@ const updateOrderStatus = async (request: Request, response: Response): Promise<
       });
     }
 
-    debug(chalk.magenta('🚀 ~ file: orders.ts ~ delete', orderOne));
+    debug(chalk.magenta('🚀 ~ file: orders.ts ~ delete'));
     return response.json({
       response: 'ok',
       status: 200,

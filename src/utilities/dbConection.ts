@@ -2,7 +2,6 @@ import {Pool} from 'pg';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import fs from 'fs';
 import chalk from 'chalk';
 import Debug from 'debug';
 

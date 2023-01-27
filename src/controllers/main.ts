@@ -5,17 +5,22 @@ import chalk from 'chalk';
 import Debug from 'debug';
 const debug = Debug('API:DB:mainFunction');
 
+interface now_response {
+  now: string;
+}
+
 const mainFunction = async (request: Request, response: Response): Promise<Response> => {
   try {
     const conectionDB = await dbConection.connect();
     const sql = 'SELECT NOW()';
     const result = await conectionDB.query(sql);
+    const now = result.rows as now_response[];
     conectionDB.release(true);
 
     debug(
       chalk.magenta(
         '🚀 ~ file: main.ts ~ line 10 ~ mainFunction ~ rows',
-        JSON.stringify(result.rows[0].now)
+        JSON.stringify(now[0].now)
       )
     );
   } catch (error) {

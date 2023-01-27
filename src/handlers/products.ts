@@ -10,7 +10,7 @@ const crud = new ProductCRUD();
 const index = async (_request: Request, response: Response): Promise<Response> => {
   try {
     const productOne = await crud.index();
-    debug(chalk.magenta('🚀 ~ file: products.ts ~ index', productOne));
+    debug(chalk.magenta('🚀 ~ file: products.ts ~ index'));
 
     return response.json({
       response: 'ok',
@@ -32,7 +32,7 @@ const showOne = async (request: Request, response: Response): Promise<Response> 
 
   try {
     const productOne = await crud.show(id);
-    debug(chalk.magenta('🚀 ~ file: products.ts ~ showOne', productOne));
+    debug(chalk.magenta('🚀 ~ file: products.ts ~ showOne'));
 
     if (productOne === null) {
       return response.status(404).json({
@@ -59,16 +59,18 @@ const showOne = async (request: Request, response: Response): Promise<Response> 
 const createOne = async (request: Request, response: Response): Promise<Response> => {
   debug(chalk.magenta('🚀 ~ file: products.ts IN'));
 
+  const {name, price, category} = request.body as Product;
+
   const product: Product = {
     id: request.params.id,
-    name: request.body.name,
-    price: request.body.price,
-    category: request.body.category,
+    name: name,
+    price: price,
+    category: category,
   };
 
   try {
     const productOne = await crud.create(product);
-    debug(chalk.magenta('🚀 ~ file: products.ts ~ createOne', JSON.stringify(productOne)));
+    debug(chalk.magenta('🚀 ~ file: products.ts ~ createOne'));
     return response.json({
       response: 'ok',
       status: 200,
@@ -85,16 +87,18 @@ const createOne = async (request: Request, response: Response): Promise<Response
 };
 
 const updateOne = async (request: Request, response: Response): Promise<Response> => {
+  const {name, price, category} = request.body as Product;
+
   const product: Product = {
     id: request.params.id,
-    name: request.body.name,
-    price: request.body.price,
-    category: request.body.category,
+    name: name,
+    price: price,
+    category: category,
   };
 
   try {
     const productOne = await crud.update(product);
-    debug(chalk.magenta('🚀 ~ file: products.ts ~ UpdateOne', productOne));
+    debug(chalk.magenta('🚀 ~ file: products.ts ~ UpdateOne'));
 
     return response.json({
       response: 'ok',
@@ -116,7 +120,7 @@ const deleteOne = async (request: Request, response: Response): Promise<Response
 
   try {
     const productOne = await crud.delete(id);
-    debug(chalk.magenta('🚀 ~ file: products.ts ~ delete', productOne));
+    debug(chalk.magenta('🚀 ~ file: products.ts ~ delete'));
 
     if (productOne === null) {
       return response.status(404).json({
@@ -143,7 +147,7 @@ const deleteOne = async (request: Request, response: Response): Promise<Response
 const topProducts = async (request: Request, response: Response): Promise<Response> => {
   try {
     const topProductList = await crud.topList();
-    debug(chalk.magenta('🚀 ~ file: products.ts ~ topProducts', topProductList));
+    debug(chalk.magenta('🚀 ~ file: products.ts ~ topProducts'));
 
     if (topProductList === null) {
       return response.status(404).json({
@@ -172,7 +176,7 @@ const byCategory = async (request: Request, response: Response): Promise<Respons
 
   try {
     const productsList = await crud.byCategory(category);
-    debug(chalk.magenta('🚀 ~ file: products.ts ~ byCategory', productsList));
+    debug(chalk.magenta('🚀 ~ file: products.ts ~ byCategory'));
 
     if (productsList === null) {
       return response.status(404).json({

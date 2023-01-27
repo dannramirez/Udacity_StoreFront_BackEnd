@@ -1,7 +1,7 @@
 import dbConection from '../utilities/dbConection';
 import chalk from 'chalk';
 import Debug from 'debug';
-import {Order, OrderProduct} from '../models/orders';
+import {Order} from '../models/orders';
 
 const debug = Debug('API:Services:Dashboards');
 
@@ -15,12 +15,12 @@ export class Dashboard {
 
       if (result.rows.length) {
         debug(chalk.green('🚀 ~ file: orders.ts ~ Orders ~ Show Orders'));
-        return result.rows[0];
+        return result.rows[0] as Order;
       }
       return null;
     } catch (err) {
       debug(chalk.red('🚀 ~ file: orders.ts ~ Orders ~ Show Orders'));
-      throw new Error(`Could not find current order ${id}. Error: ${err}`);
+      throw new Error(`Could not find current order ${id}. Error: ${err as string}`);
     }
   }
 
@@ -34,12 +34,12 @@ export class Dashboard {
 
       if (result.rows.length) {
         debug(chalk.green('🚀 ~ file: orders.ts ~ Orders ~ Show Orders'));
-        return result.rows[0];
+        return result.rows[0] as Order;
       }
       return null;
     } catch (err) {
       debug(chalk.red('🚀 ~ file: OrderProduct.ts ~ OrderProduct ~ Show OrderProduct'));
-      throw new Error(`Could not find Completed orders from ${id}. Error: ${err}`);
+      throw new Error(`Could not find Completed orders from ${id}. Error: ${err as string}`);
     }
   }
 }
