@@ -84,9 +84,9 @@ export class ProductCRUD {
     let conectionDB: PoolClient | null = null;
     try {
       const sql =
-        'UPDATE "public"."Products" set "category"=$1 "name"= $2 "price"= $3 WHERE id = $4 RETURNING *';
+        'UPDATE "public"."Products" SET "name"= $1, "price"= $2, "category"=$3 WHERE id = $4 RETURNING *';
       conectionDB = await dbConection.connect();
-      const result = await conectionDB.query(sql, [p.category, p.name, p.price, p.id]);
+      const result = await conectionDB.query(sql, [p.name, p.price, p.category, p.id]);
       const product = result.rows[0] as Product;
 
       debug(chalk.green('🚀 ~ file: product.ts ~ Products ~ update Products'));
@@ -94,7 +94,7 @@ export class ProductCRUD {
       return product;
     } catch (err) {
       debug(chalk.red('🚀 ~ file: product.ts ~ Products ~ update Products'));
-      throw new Error(`Could not update producdt ${p.name}. Error: ${err as string}`);
+      throw new Error(`Could not update product ${p.name}. Error: ${err as string}`);
     } finally {
       if (conectionDB !== null) {
         conectionDB.release(true);
@@ -118,56 +118,6 @@ export class ProductCRUD {
     } catch (err) {
       debug(chalk.red('🚀 ~ file: product.ts ~ Products ~ Delete Products'));
       throw new Error(`Could not delete product ${id}. Error: ${err as string}`);
-    } finally {
-      if (conectionDB !== null) {
-        conectionDB.release(true);
-        debug(chalk.magenta('🚀 ~ file: product.ts ~ Product ~ Release conection'));
-      }
-    }
-  }
-
-  /**
-   * Todo: Make SQL script for topList and byCategory Methods in model
-   */
-
-  async topList(): Promise<Product | null> {
-    let conectionDB: PoolClient | null = null;
-    try {
-      const sql = 'SELECT * FROM "public"."Products"';
-      conectionDB = await dbConection.connect();
-      const result = await conectionDB.query(sql);
-
-      if (result.rows.length) {
-        debug(chalk.green('🚀 ~ file: Product.ts ~ Products ~ topList Products'));
-        return result.rows[0] as Product;
-      }
-      return null;
-    } catch (err) {
-      debug(chalk.red('🚀 ~ file: Product.ts ~ Products ~ topList Products'));
-      throw new Error(`Could not find products. Error: ${err as string}`);
-    } finally {
-      if (conectionDB !== null) {
-        conectionDB.release(true);
-        debug(chalk.magenta('🚀 ~ file: product.ts ~ Product ~ Release conection'));
-      }
-    }
-  }
-
-  async byCategory(category: string): Promise<Product | null> {
-    let conectionDB: PoolClient | null = null;
-    try {
-      const sql = 'SELECT * FROM "public"."Products" WHERE id=($1)';
-      conectionDB = await dbConection.connect();
-      const result = await conectionDB.query(sql, [category]);
-
-      if (result.rows.length) {
-        debug(chalk.green('🚀 ~ file: Product.ts ~ Products ~ byCategory Products'));
-        return result.rows[0] as Product;
-      }
-      return null;
-    } catch (err) {
-      debug(chalk.red('🚀 ~ file: Product.ts ~ Products ~ byCategory Products'));
-      throw new Error(`Could not find products belongs to category. Error: ${err as string}`);
     } finally {
       if (conectionDB !== null) {
         conectionDB.release(true);
